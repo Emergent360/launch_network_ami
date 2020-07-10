@@ -59,7 +59,7 @@
     public_ip: "{{ ec2_result.instances[0].public_ip }}"
 
 - name: "Wait for connection."
-  delegate-to: "{{ public_ip  }}"
+  delegate_to: "{{ public_ip  }}"
   wait_for_connection:
     timeout: 300
 
