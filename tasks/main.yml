@@ -56,7 +56,7 @@
 
 - name: set public ip
   set_fact:
-    public_ip: "{{ ec2_result.instances[0].public_ip }}"
+    public_ip: "{{ ec2_result.tagged_instances[0].public_ip }}"
 
 - name: "Wait for connection."
   delegate_to: "{{ public_ip  }}"
