@@ -65,6 +65,6 @@
 
 - name: Show public IP
   debug:
-    msg: "{{ ec2_result.instances[0].public_ip }}"
+    msg: "{{ ec2_result.tagged_instances[0].public_ip }}"
 
  
