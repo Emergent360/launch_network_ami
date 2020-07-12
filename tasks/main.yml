@@ -46,8 +46,7 @@
     wait: yes
     wait_timeout: 500
     exact_count: 1
-    count_tag:
-      count_tag: Name
+    count_tag: Name
     instance_tags:
       Name: "{{ instance_tag_name }}"
       Role: "{{ instance_tag_role }}"
