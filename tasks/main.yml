@@ -58,14 +58,15 @@
   set_fact:
     public_ip: "{{ ec2_result.tagged_instances[0].public_ip }}"
 
-- name: "Wait for connection."
-  delegate_to: "{{ public_ip  }}"
-  wait_for_connection:
-    timeout: 300
-
 - name: Show public IP
   debug:
     msg: "{{ ec2_result.tagged_instances[0].public_ip }}"
+
+- name: "Wait for connection."
+  wait_for:
+    host: "{{ public_ip }}"
+    timeout: 300
+    port: 22
 
 - name: Gather facts (eos)
   eos_facts:
