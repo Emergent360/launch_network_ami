@@ -67,6 +67,19 @@
   debug:
     msg: "{{ ec2_result.tagged_instances[0].public_ip }}"
 
+- name: Gather facts (eos)
+  eos_facts:
+  when: ansible_network_os == 'eos'
+
+- name: Gather facts (ops)
+  ios_facts:
+  when: ansible_network_os == 'ios'
+
+- name: Gather facts (vyos)
+  vyos_facts:
+  when: ansible_network_os == 'vyos'
+  
+
 - name: Display some facts
   debug:
     msg: "The hostname is {{ ansible_net_hostname }} and the OS is {{ ansible_net_version }}"
