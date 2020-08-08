@@ -21,7 +21,7 @@
     filters:
       vpc-id: "{{ vpc_net_facts.vpcs[0].id }}"
       "tag:Name": "{{ ec2_name_prefix }}-subnet"
-  register: subnet_facts
+  register: subnet_info
 
 - name: "Find current, region-specific AMI ID."
   ec2_ami_info:
@@ -42,7 +42,7 @@
     image: "{{ win_ami.image_id }}"
     instance_type: "{{ instance_type }}"
     group_id: "{{ sg_net_facts.security_groups[0].group_id }}"
-    vpc_subnet_id: "{{ subnet_facts.subnets[0].id }}"
+    vpc_subnet_id: "{{ subnet_info.subnets[0].id }}"
     wait: "{{ ec2_wait }}"
     wait_timeout: 500
     exact_count: 1
