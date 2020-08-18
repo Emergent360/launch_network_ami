@@ -43,28 +43,28 @@
     instance_type: "{{ instance_type }}"
     group_id: "{{ sg_net_facts.security_groups[0].group_id }}"
     vpc_subnet_id: "{{ subnet_info.subnets[0].id }}"
-    wait: "{{ ec2_wait }}"
+    wait: yes
     wait_timeout: 500
-    exact_count: 1
+    exact_count: "{{ instance_count }}"
     count_tag: 
-      Name: "{{ instance_tag_name }}"
+      Name: "{{ instance_tag_inventory }} IOS Router"
     instance_tags:
-      Name: "{{ instance_tag_name }}"
-      Role: "{{ instance_tag_role }}"
+      Role: ios_router
+      Platform: IOS
+      Name: "{{ instance_tag_inventory }} IOS Router"
       Inventory: "{{ instance_tag_inventory }}"
+      Stage: "instantiated"
   register: ec2_result
 
-- name: set public ip
-  set_fact:
-    public_ip: "{{ ec2_result.tagged_instances[0].public_ip }}"
-
-- name: Show public IP
-  debug:
-    msg: "{{ ec2_result.tagged_instances[0].public_ip }}"
-
-- name: "Wait for connection."
+- name: "Wait for connection on all hosts."
   wait_for:
-    host: "{{ public_ip }}"
-    timeout: 300
     port: 22
-    
+    host: "{{ item.private_ip }}"
+    timeout: 300
+  loop: "{{ ec2_result.instances }}"
+
+- name: Show private DNS name
+  debug:
+    msg: "Private DNS name: {{ item.private_dns_name }}"
+  loop: "{{ ec2_result.instances }}"
+  
