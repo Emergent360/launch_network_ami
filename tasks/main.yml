@@ -32,14 +32,14 @@
 
 - name: "Set AMI value"
   set_fact:
-    win_ami: "{{ found_amis.images | selectattr('name', 'defined') | sort(attribute='creation_date') | last }}"
+    target_ami: "{{ found_amis.images | selectattr('name', 'defined') | sort(attribute='creation_date') | last }}"
   when: found_amis.images is defined
 
 - name: "Start instance."
   ec2:
     key_name: "{{ ec2_name_prefix }}-key"
     region: "{{ ec2_region }}"
-    image: "{{ win_ami.image_id }}"
+    image: "{{ target_ami.image_id }}"
     instance_type: "{{ instance_type }}"
     group_id: "{{ sg_net_facts.security_groups[0].group_id }}"
     vpc_subnet_id: "{{ subnet_info.subnets[0].id }}"
