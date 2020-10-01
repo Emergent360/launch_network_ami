@@ -47,12 +47,12 @@
     wait_timeout: 500
     exact_count: "{{ instance_count }}"
     count_tag: 
-      Name: "{{ instance_tag_inventory }} IOS Router"
+      Name: "{{ ec2_name_prefix }} IOS Router"
     instance_tags:
       Role: ios_router
       Platform: IOS
-      Name: "{{ instance_tag_inventory }} IOS Router"
-      Inventory: "{{ instance_tag_inventory }}"
+      Name: "{{ ec2_name_prefix }} IOS Router"
+      Inventory: "{{ ec2_name_prefix }}"
       Stage: "instantiated"
   register: ec2_result
 
