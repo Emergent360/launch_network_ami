@@ -2,3 +2,6 @@
 # defaults file for launch_network_ami
 ec2_name_prefix: Test
 ec2_region: us-east-1
+ami_name: cisco-CSR-.16.09.02-BYOL*
+instance_type: t2.medium
+instance_count: 1
